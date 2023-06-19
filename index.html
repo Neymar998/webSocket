@@ -12,6 +12,7 @@
         <ul></ul>
         <input type="text" id="input">
         <button id="send">发送</button>
+
     </div>
 
     <script>
@@ -34,8 +35,11 @@
         ws.addEventListener('message', (e) => {
             let ul = document.querySelector('ul');
             let li = document.createElement('li');
-            li.innerText = e.data;
-            ul.appendChild(li);
+            let data = JSON.parse(e.data);
+            if (data.type == 2) {
+                li.innerText = data.message;
+                ul.appendChild(li);
+            }
         })
     </script>
 </body>
