@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div>
+        <ul></ul>
+        <input type="text" id="input">
+        <button id="send">发送</button>
+    </div>
+
+    <script>
+        //webSocket
+        const ws = new WebSocket('ws://localhost:8080');
+        //open连接成功
+        ws.addEventListener('open', () => {
+            console.log('连接成功');
+        })
+
+        let input = document.querySelector('#input');
+        let btn = document.querySelector('#send');
+        btn.addEventListener('click', () => {
+            if (input.value) {
+                ws.send(input.value)
+                input.value = '';
+            }
+        })
+
+        ws.addEventListener('message', (e) => {
+            let ul = document.querySelector('ul');
+            let li = document.createElement('li');
+            li.innerText = e.data;
+            ul.appendChild(li);
+        })
+    </script>
+</body>
+
+</html>
